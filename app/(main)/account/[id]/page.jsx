@@ -1,9 +1,9 @@
 import React from 'react'
 
-const AccountPage = () => {
+const AccountPage = ({params}) => {
   return (
     <div>
-      This is Account Page
+      Accounts Page
     </div>
   )
 }

@@ -28,13 +28,13 @@ const Header = async () => {
             >
               <Button variant="outline">
                 <LayoutDashboard size={18} />
-                <span className="hidden md:inline">Dashboard</span>
+                <span className="hidden md:inline cursor-pointer">Dashboard</span>
               </Button>
             </Link>
             <Link href={"/transaction/create"}>
               <Button className="flex items-center gap-2">
                 <PenBox size={18} />
-                <span className="hidden md:inline">Add Transaction</span>
+                <span className="hidden md:inline cursor-pointer">Add Transaction</span>
               </Button>
             </Link>
           </SignedIn>
