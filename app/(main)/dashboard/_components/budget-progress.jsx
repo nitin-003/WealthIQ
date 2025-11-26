@@ -143,3 +143,5 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
 };
 
 export default BudgetProgress;
+
+
