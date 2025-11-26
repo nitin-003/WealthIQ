@@ -12,7 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -74,23 +80,23 @@ const TransactionTable = ({ transactions }) => {
     let result = [...transactions];
 
     // Apply Search Filter
-    if(searchTerm){
+    if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
-      result = result.filter((transaction) => 
+      result = result.filter((transaction) =>
         transaction.description?.toLowerCase().includes(searchLower)
       );
     }
 
     // Apply Recurring Filter
-    if(recurringFilter){
+    if (recurringFilter) {
       result = result.filter((transaction) => {
-        if(recurringFilter === "recurring") return transaction.isRecurring;
+        if (recurringFilter === "recurring") return transaction.isRecurring;
         return !transaction.isRecurring;
       });
     }
 
     // Apply Type Filter
-    if(typeFilter){
+    if (typeFilter) {
       result = result.filter((transaction) => transaction.type === typeFilter);
     }
 
@@ -98,7 +104,7 @@ const TransactionTable = ({ transactions }) => {
     result.sort((a, b) => {
       let comparison = 0;
 
-      switch (sortConfig.field){
+      switch (sortConfig.field) {
         case "date":
           comparison = new Date(a.date) - new Date(b.date);
           break;
@@ -116,7 +122,7 @@ const TransactionTable = ({ transactions }) => {
     });
 
     return result;
-  }, [ transactions, searchTerm, typeFilter, recurringFilter, sortConfig ]);
+  }, [transactions, searchTerm, typeFilter, recurringFilter, sortConfig]);
 
   const handleSort = (field) => {
     setSortConfig((current) => ({
@@ -143,9 +149,11 @@ const TransactionTable = ({ transactions }) => {
   };
 
   const handleBulkDelete = async () => {
-    if(!window.confirm(
-      `Are you sure you want to delete ${selectedIds.length} transactions ?`
-    )){
+    if (
+      !window.confirm(
+        `Are you sure you want to delete ${selectedIds.length} transactions ?`
+      )
+    ) {
       return;
     }
 
@@ -153,7 +161,7 @@ const TransactionTable = ({ transactions }) => {
   };
 
   useEffect(() => {
-    if(deleted && !deleteLoading){
+    if (deleted && !deleteLoading) {
       toast.error("Transactions deleted successfully");
     }
   }, [deleted, deleteLoading]);
@@ -163,13 +171,13 @@ const TransactionTable = ({ transactions }) => {
     setTypeFilter("");
     setRecurringFilter("");
     setSelectedIds([]);
-  }
+  };
 
   return (
     <div className="space-y-4">
-      { deleteLoading && 
+      {deleteLoading && (
         <BarLoader className="mt-4" width={"100%"} color="#9333ea" />
-      }
+      )}
 
       {/* Filters   */}
       <div className="flex flex-col sm:flex-row gap-4">
@@ -194,7 +202,10 @@ const TransactionTable = ({ transactions }) => {
             </SelectContent>
           </Select>
 
-          <Select value={recurringFilter} onValueChange={(value) => setRecurringFilter(value)}>
+          <Select
+            value={recurringFilter}
+            onValueChange={(value) => setRecurringFilter(value)}
+          >
             <SelectTrigger className="w-[158px]">
               <SelectValue placeholder="All Transactions" />
             </SelectTrigger>
@@ -206,19 +217,25 @@ const TransactionTable = ({ transactions }) => {
 
           {selectedIds.length > 0 && (
             <div className="flex items-center gap-2">
-              <Button 
-              variant="destructive" 
-              size="sm"onClick={handleBulkDelete}
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleBulkDelete}
               >
-                <Trash className="h-4 w-4 mr-2"/>
+                <Trash className="h-4 w-4 mr-2" />
                 Delete Selected ({selectedIds.length})
               </Button>
             </div>
           )}
 
           {(searchTerm || typeFilter || recurringFilter) && (
-            <Button variant="outline" size="icon" onClick={handleClearFilters} title="Clear Filters">
-              <X className="h-4 w-5"/>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleClearFilters}
+              title="Clear Filters"
+            >
+              <X className="h-4 w-5" />
             </Button>
           )}
         </div>

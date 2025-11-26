@@ -59,4 +59,3 @@ const AccountPage = async ({ params }) => {
 export default AccountPage;
 
 
-

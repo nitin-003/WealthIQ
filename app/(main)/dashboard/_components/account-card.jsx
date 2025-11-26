@@ -28,23 +28,23 @@ const AccountCard = ({ account }) => {
   const handleDefaultChange = async (event) => {
     event.preventDefault();
 
-    if(isDefault){
-        toast.warning("You need atleast one default account");
-        return;
+    if (isDefault) {
+      toast.warning("You need atleast one default account");
+      return;
     }
 
     await updateDefaultFn(id);
-  }
+  };
 
   useEffect(() => {
-    if(updatedAccount?.success){
-        toast.success("Default account updated successfully");
+    if (updatedAccount?.success) {
+      toast.success("Default account updated successfully");
     }
   }, [updatedAccount, updateDefaultLoading]);
 
   useEffect(() => {
-    if(error){
-        toast.error(error.message || "Failed to update default account"); 
+    if (error) {
+      toast.error(error.message || "Failed to update default account");
     }
   }, [error]);
 
@@ -52,10 +52,15 @@ const AccountCard = ({ account }) => {
     <Card className="hover:shadow-md transition-shadow group relative">
       <Link href={`/account/${id}`}>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium capitalize">
-                {name}
-            </CardTitle>
-            <Switch checked={isDefault} onClick={handleDefaultChange} disabled={updateDefaultLoading} className="cursor-pointer" />
+          <CardTitle className="text-sm font-medium capitalize">
+            {name}
+          </CardTitle>
+          <Switch
+            checked={isDefault}
+            onClick={handleDefaultChange}
+            disabled={updateDefaultLoading}
+            className="cursor-pointer"
+          />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
@@ -79,7 +84,5 @@ const AccountCard = ({ account }) => {
 };
 
 export default AccountCard;
-
-
 
 
