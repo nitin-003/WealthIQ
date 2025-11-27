@@ -1,11 +1,12 @@
 "use server";
+
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { gte, lte } from "zod";
 
-export async function getCurrentBudget(accountId) {
-  try {
+export async function getCurrentBudget(accountId){
+  try{
     const { userId } = await auth();
     if (!userId) {
       throw new Error("Unauthorized");
@@ -39,6 +40,7 @@ export async function getCurrentBudget(accountId) {
       currentDate.getMonth() + 1,
       0
     );
+
     const expenses = await db.transaction.aggregate({
       where: {
         userId: user.id,
@@ -60,7 +62,8 @@ export async function getCurrentBudget(accountId) {
         ? expenses._sum.amount.toNumber()
         : 0,
     };
-  } catch (error) {
+  } 
+  catch(error){
     console.error("Error fetching budget:", error);
     throw error;
   }
@@ -69,7 +72,7 @@ export async function getCurrentBudget(accountId) {
 export async function updateBudget(amount){
   try{
     const { userId } = await auth();
-    if(!userId){
+    if (!userId) {
       throw new Error("Unauthorized");
     }
 
@@ -79,27 +82,27 @@ export async function updateBudget(amount){
       },
     });
 
-    if(!user){
+    if (!user) {
       throw new Error("User not found");
     }
 
     const budget = await db.budget.upsert({
-        where: {
-            userId: user.id,
-        },
-        update: {
-            amount,
-        },
-        create: {
-            userId: user.id,
-            amount,
-        },
+      where: {
+        userId: user.id,
+      },
+      update: {
+        amount,
+      },
+      create: {
+        userId: user.id,
+        amount,
+      },
     });
 
     revalidatePath("/dashboard");
-    return{
-        success: true,
-        data: { ...budget, amount: budget.amount.toNumber() },
+    return {
+      success: true,
+      data: { ...budget, amount: budget.amount.toNumber() },
     };
   } 
   catch(error){
@@ -107,5 +110,3 @@ export async function updateBudget(amount){
     return { success: false, error: error.message };
   }
 }
-
-
