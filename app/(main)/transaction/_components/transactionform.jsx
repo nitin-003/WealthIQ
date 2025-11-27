@@ -273,7 +273,11 @@ const AddTransactionForm = ({ accounts, categories }) => {
         >
           Cancel
         </Button>
-        <Button type="submit" className="w-1/2 cursor-pointer" disabled={transactionLoading}>
+        <Button
+          type="submit"
+          className="w-1/2 cursor-pointer"
+          disabled={transactionLoading}
+        >
           Create Transaction
         </Button>
       </div>
@@ -282,6 +286,4 @@ const AddTransactionForm = ({ accounts, categories }) => {
 };
 
 export default AddTransactionForm;
-
-
 
