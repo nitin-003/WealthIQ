@@ -84,7 +84,7 @@ const AddTransactionForm = ({ accounts, categories }) => {
   const handleScanComplete = (scannedData) => {
     if (scannedData) {
       setValue("amount", scannedData.amount.toString());
-      setValue("date", new Date(scannedData.date()));
+      setValue("date", new Date(scannedData.date));
 
       if (scannedData.description) {
         setValue("description", scannedData.description);

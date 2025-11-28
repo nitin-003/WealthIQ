@@ -69,3 +69,5 @@ const ReceiptScanner = ({ onScanComplete }) => {
 };
 
 export default ReceiptScanner;
+
+
