@@ -13,9 +13,15 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "5mb",
     },
+
+    serverSourceMaps: false,
   },
+
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;
+
+
 
 
