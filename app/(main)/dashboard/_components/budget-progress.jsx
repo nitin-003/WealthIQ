@@ -4,7 +4,6 @@ import { updateBudget } from "@/actions/budget";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -46,6 +45,7 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
 
   useEffect(() => {
     if (updatedBudget?.success) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsEditing(false);
       toast.success("Budget updated successfully");
     }
@@ -116,8 +116,6 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
             )}
           </div>
         </div>
-
-        <CardAction>Card Action</CardAction>
       </CardHeader>
       <CardContent>
         {initialBudget && (
@@ -143,5 +141,6 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
 };
 
 export default BudgetProgress;
+
 
 

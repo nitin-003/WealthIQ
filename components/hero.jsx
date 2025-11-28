@@ -39,13 +39,8 @@ const HeroSection = () => {
         </p>
         <div className="flex justify-center space-x-4">
           <Link href="/dashboard">
-            <Button size="lg" variant="outline" className="px-8">
+            <Button size="lg" variant="outline" className="px-8 cursor-pointer">
               Get Started
-            </Button>
-          </Link>
-          <Link href="https://www.youtube.com/watch?v=ZTsGdNkptfY">
-            <Button size="lg" variant="outline" className="px-8">
-              Watch Demo
             </Button>
           </Link>
         </div>

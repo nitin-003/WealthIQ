@@ -14,10 +14,10 @@ const serializeAmount = (obj) => ({
   amount: obj.amount.toNumber(),
 });
 
-export async function createTransaction(data) {
-  try {
+export async function createTransaction(data){
+  try{
     const { userId } = await auth();
-    if (!userId) {
+    if(!userId){
       throw new Error("Unauthorized");
     }
 
@@ -30,8 +30,8 @@ export async function createTransaction(data) {
       requested: 1, // Specify how many tokens to consume
     });
 
-    if (decision.isDenied()) {
-      if (decision.reason.isRateLimit()) {
+    if(decision.isDenied()){
+      if(decision.reason.isRateLimit()){
         const { remaining, reset } = decision.reason;
         console.error({
           code: "RATE_LIMIT_EXCEEDED",
@@ -53,7 +53,7 @@ export async function createTransaction(data) {
       },
     });
 
-    if (!user) {
+    if(!user){
       throw new Error("User not found");
     }
 
@@ -64,7 +64,7 @@ export async function createTransaction(data) {
       },
     });
 
-    if (!account) {
+    if(!account){
       throw new Error("Account not found");
     }
 
@@ -95,7 +95,8 @@ export async function createTransaction(data) {
     revalidatePath(`/account/${transaction.accountId}`);
 
     return { success: true, data: serializeAmount(transaction) };
-  } catch (error) {
+  } 
+  catch(error){
     throw new Error(error.message);
   }
 }
@@ -103,7 +104,7 @@ export async function createTransaction(data) {
 function calculateNextRecurringDate(startDate, interval) {
   const date = new Date(startDate);
 
-  switch (interval) {
+  switch(interval){
     case "DAILY":
       date.setDate(date.getDate() + 1);
       break;
@@ -121,8 +122,8 @@ function calculateNextRecurringDate(startDate, interval) {
   return date;
 }
 
-export async function scanReceipt(file) {
-  try {
+export async function scanReceipt(file){
+  try{
     const model = genAI.getGenerativeModel({
       model: "gemini-2.0-flash",
     });
@@ -166,7 +167,7 @@ export async function scanReceipt(file) {
     const text = response.text();
     const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
 
-    try {
+    try{
       const data = JSON.parse(cleanedText);
       return {
         amount: parseFloat(data.amount),
@@ -175,11 +176,13 @@ export async function scanReceipt(file) {
         category: data.category,
         merchantName: data.merchantName,
       };
-    } catch (parseError) {
+    } 
+    catch(parseError){
       console.error("Error parsing JSON response:", parseError);
       throw new Error("Invalid response format from Gemini");
     }
-  } catch (error) {
+  } 
+  catch(error){
     console.error("Error scanning receipt:", error.message);
     throw new Error("Failed to scan receipt");
   }
@@ -187,13 +190,13 @@ export async function scanReceipt(file) {
 
 export async function getTransaction(id) {
   const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
+  if(!userId) throw new Error("Unauthorized");
 
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
 
-  if (!user) throw new Error("User not found");
+  if(!user) throw new Error("User not found");
 
   const transaction = await db.transaction.findUnique({
     where: {
@@ -202,21 +205,21 @@ export async function getTransaction(id) {
     },
   });
 
-  if (!transaction) throw new Error("Transaction not found");
+  if(!transaction) throw new Error("Transaction not found");
 
   return serializeAmount(transaction);
 }
 
 export async function updateTransaction(id, data) {
-  try {
+  try{
     const { userId } = await auth();
-    if (!userId) throw new Error("Unauthorized");
+    if(!userId) throw new Error("Unauthorized");
 
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
     });
 
-    if (!user) throw new Error("User not found");
+    if(!user) throw new Error("User not found");
 
     // Get original transaction to calculate balance change
     const originalTransaction = await db.transaction.findUnique({
@@ -271,11 +274,8 @@ export async function updateTransaction(id, data) {
 
     return { success: true, data: serializeAmount(transaction) };
   } 
-  catch (error) {
+  catch(error){
     throw new Error(error.message);
   }
 }
-
-
-
 

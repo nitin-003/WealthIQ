@@ -6,18 +6,18 @@ import { revalidatePath } from "next/cache";
 const serializeTransaction = (obj) => {
   const serialized = { ...obj };
 
-  if (obj.balance) {
+  if(obj.balance){
     serialized.balance = obj.balance.toNumber();
   }
-  if (obj.amount) {
+  if(obj.amount){
     serialized.amount = obj.amount.toNumber();
   }
 
   return serialized;
 };
 
-export async function createAccount(data) {
-  try {
+export async function createAccount(data){
+  try{
     const { userId } = await auth();
     if (!userId) {
       throw new Error("Unauthorized");
@@ -29,14 +29,14 @@ export async function createAccount(data) {
       },
     });
 
-    if (!user) {
+    if(!user){
       throw new Error("User not found");
     }
 
     // Convert balance to float before saving
     const balanceFloat = parseFloat(data.balance);
 
-    if (isNaN(balanceFloat)) {
+    if(isNaN(balanceFloat)){
       throw new Error("Invalid balace amount");
     }
 
@@ -45,11 +45,10 @@ export async function createAccount(data) {
       where: { userId: user.id },
     });
 
-    const shouldBeDefault =
-      existingAccounts.length === 0 ? true : data.isDefault;
+    const shouldBeDefault = existingAccounts.length === 0 ? true : data.isDefault;
 
     // If this account should be default, unset other default accounts
-    if (shouldBeDefault) {
+    if(shouldBeDefault){
       await db.account.updateMany({
         where: { userId: user.id, isDefault: true },
         data: { isDefault: false },
@@ -70,15 +69,16 @@ export async function createAccount(data) {
     revalidatePath("/dashboard");
 
     return { success: true, data: serializedAccount };
-  } catch (error) {
+  } 
+  catch(error){
     throw new Error(error.message);
   }
 }
 
-export async function getUserAccounts() {
-  try {
+export async function getUserAccounts(){
+  try{
     const { userId } = await auth();
-    if (!userId) {
+    if(!userId){
       throw new Error("Unauthorized");
     }
 
@@ -88,7 +88,7 @@ export async function getUserAccounts() {
       },
     });
 
-    if (!user) {
+    if(!user){
       throw new Error("User not found");
     }
 
@@ -106,14 +106,15 @@ export async function getUserAccounts() {
 
     const serializedAccount = accounts.map(serializeTransaction);
     return serializedAccount;
-  } catch (error) {
+  } 
+  catch(error){
     throw new Error(error.message);
   }
 }
 
 export async function getDashboardData(){
     const { userId } = await auth();
-    if (!userId) {
+    if(!userId){
       throw new Error("Unauthorized");
     }
 
@@ -123,7 +124,7 @@ export async function getDashboardData(){
       },
     });
 
-    if (!user) {
+    if(!user){
       throw new Error("User not found");
     }
 
@@ -135,5 +136,6 @@ export async function getDashboardData(){
 
     return transactions.map(serializeTransaction);
 }
+
 
 

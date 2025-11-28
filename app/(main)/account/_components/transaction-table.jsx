@@ -96,7 +96,7 @@ const TransactionTable = ({ transactions }) => {
     }
 
     // Apply Type Filter
-    if (typeFilter) {
+    if(typeFilter){
       result = result.filter((transaction) => transaction.type === typeFilter);
     }
 
@@ -416,3 +416,5 @@ const TransactionTable = ({ transactions }) => {
 };
 
 export default TransactionTable;
+
+

@@ -10,7 +10,7 @@ const AccountPage = async ({ params }) => {
 
   const accountData = await getAccountWithTransactions(id);
 
-  if (!accountData) {
+  if(!accountData){
     notFound();
   }
 

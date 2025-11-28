@@ -8,7 +8,7 @@ import { gte, lte } from "zod";
 export async function getCurrentBudget(accountId){
   try{
     const { userId } = await auth();
-    if (!userId) {
+    if(!userId){
       throw new Error("Unauthorized");
     }
 
@@ -18,7 +18,7 @@ export async function getCurrentBudget(accountId){
       },
     });
 
-    if (!user) {
+    if(!user){
       throw new Error("User not found");
     }
 
@@ -58,9 +58,7 @@ export async function getCurrentBudget(accountId){
 
     return {
       budget: budget ? { ...budget, amount: budget.amount.toNumber() } : null,
-      currentExpenses: expenses._sum.amount
-        ? expenses._sum.amount.toNumber()
-        : 0,
+      currentExpenses: expenses._sum.amount ? expenses._sum.amount.toNumber() : 0,
     };
   } 
   catch(error){
@@ -72,7 +70,7 @@ export async function getCurrentBudget(accountId){
 export async function updateBudget(amount){
   try{
     const { userId } = await auth();
-    if (!userId) {
+    if(!userId){
       throw new Error("Unauthorized");
     }
 
@@ -82,7 +80,7 @@ export async function updateBudget(amount){
       },
     });
 
-    if (!user) {
+    if(!user){
       throw new Error("User not found");
     }
 
@@ -110,3 +108,7 @@ export async function updateBudget(amount){
     return { success: false, error: error.message };
   }
 }
+
+
+
+

@@ -14,7 +14,7 @@ async function DashboardPage() {
   const defaultAccount = accounts?.find((account) => account.isDefault);
 
   let budgetData = null;
-  if (defaultAccount) {
+  if(defaultAccount){
     budgetData = await getCurrentBudget(defaultAccount.id);
   }
 
@@ -60,3 +60,5 @@ async function DashboardPage() {
 }
 
 export default DashboardPage;
+
+

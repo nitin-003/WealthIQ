@@ -7,10 +7,10 @@ import { revalidatePath } from "next/cache";
 const serializeTransaction = (obj) => {
   const serialized = { ...obj };
 
-  if (obj.balance) {
+  if(obj.balance){
     serialized.balance = obj.balance.toNumber();
   }
-  if (obj.amount) {
+  if(obj.amount){
     serialized.amount = obj.amount.toNumber();
   }
 
@@ -129,7 +129,6 @@ export async function bulkDeleteTransactions(transactionIds){
 
         // Delete transactions and update account balances in a transaction
         await db.transaction(async (tx) => {
-            // Delete transactions
             await tx.transaction.deleteMany({
                 where: {
                     id: { in: transactionIds}
