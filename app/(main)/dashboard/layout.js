@@ -9,7 +9,7 @@ const DashboardLayout = () => {
         Dashboard
       </h1>
       <Suspense
-        fallback={<BarLoader className="mt-4" width={"100"} color="#9333ea" />}
+        fallback={<BarLoader className="mt-4" width={100} color="#9333ea" />}
       >
         <DashboardPage />
       </Suspense>
