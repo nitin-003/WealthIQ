@@ -11,14 +11,22 @@ const Header = async () => {
   return (
     <div className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 py-1">
           <Image
-            src={"/WealthIQ_logo.png"}
+            src="/WealthIQ_logo.jpg"
             alt="WealthIQ Logo"
             height={60}
             width={200}
-            className="h-12 w-auto object-contain"
+            className="w-[42px] h-[42px] sm:w-[50px] sm:h-[50px] object-cover rounded-full shadow-sm"
           />
+
+          <span
+            className="font-extrabold text-2xl sm:text-3xl tracking-tight 
+              bg-gradient-to-r from-purple-500 via-pink-500 to-red-500
+              bg-clip-text text-transparent animate-gradient-x pl-1"
+          >
+            WealthIQ
+          </span>
         </Link>
         <div className="flex items-center space-x-4">
           <SignedIn>
@@ -28,19 +36,23 @@ const Header = async () => {
             >
               <Button variant="outline">
                 <LayoutDashboard size={18} />
-                <span className="hidden md:inline cursor-pointer">Dashboard</span>
+                <span className="hidden md:inline cursor-pointer">
+                  Dashboard
+                </span>
               </Button>
             </Link>
             <Link href={"/transaction/create"}>
               <Button className="flex items-center gap-2">
                 <PenBox size={18} />
-                <span className="hidden md:inline cursor-pointer">Add Transaction</span>
+                <span className="hidden md:inline cursor-pointer">
+                  Add Transaction
+                </span>
               </Button>
             </Link>
           </SignedIn>
           <SignedOut>
             <SignInButton forceRedirectUrl="/dashboard">
-              <Button variant="outline">Login</Button>
+              <Button variant="outline" className="cursor-pointer">Login</Button>
             </SignInButton>
           </SignedOut>
           <SignedIn>
@@ -59,6 +71,5 @@ const Header = async () => {
 };
 
 export default Header;
-
 
 

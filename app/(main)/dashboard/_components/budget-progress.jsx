@@ -108,7 +108,7 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsEditing(true)}
-                  className="h-6 w-6"
+                  className="h-6 w-6 cursor-pointer"
                 >
                   <Pencil className="h-3 w-3" />
                 </Button>

@@ -102,7 +102,7 @@ export default function Home() {
             Join thousands of users who are already managing their finances smarter with WealthIQ
           </p>
           <Link href="/dashboard">
-             <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 animate-bounce">
+             <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 animate-bounce cursor-pointer">
                 Start Free Trial
              </Button>
           </Link>

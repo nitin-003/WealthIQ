@@ -12,15 +12,14 @@ const HeroSection = () => {
     const imageElement = imageRef.current;
 
     const handleScroll = () => {
-        const scrollPosition = window.scrollY;
-        const scrollThreshold = 300;
+      const scrollPosition = window.scrollY;
+      const scrollThreshold = 300;
 
-        if(scrollPosition > scrollThreshold){
-            imageElement.classList.add("scrolled");
-        }
-        else{
-            imageElement.classList.remove("scrolled");
-        }
+      if (scrollPosition > scrollThreshold) {
+        imageElement.classList.add("scrolled");
+      } else {
+        imageElement.classList.remove("scrolled");
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -30,7 +29,11 @@ const HeroSection = () => {
   return (
     <div className="pb-20 px-4">
       <div className="container mx-auto text-center">
-        <h1 className="text-5xl md:text-8xl lg:text-[105px] pb-6 gradient-title">
+        <h1
+          className="font-extrabold tracking-tight text-5xl md:text-8xl lg:text-[105px] 
+            pb-6 pl-1 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-700
+            bg-clip-text text-transparent animate-gradient-x"
+        >
           Manage Your Finances <br /> with Intelligence
         </h1>
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -39,7 +42,12 @@ const HeroSection = () => {
         </p>
         <div className="flex justify-center space-x-4">
           <Link href="/dashboard">
-            <Button size="lg" variant="outline" className="px-8 cursor-pointer">
+            <Button
+              size="lg"
+              variant="outline"
+              className="px-8 cursor-pointer transition-all duration-300 hover:scale-105 
+                hover:shadow-[0_0_20px_rgba(56,189,248,0.6)] border-sky-400 hover:border-sky-500"
+            >
               Get Started
             </Button>
           </Link>
