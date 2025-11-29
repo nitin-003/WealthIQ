@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "middleware": {
+      "excludeFiles": "node_modules/@arcjet/**"
+    }
+  }
+}
+
+
