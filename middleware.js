@@ -1,15 +1,17 @@
-import { clerkMiddleware } from "@clerk/nextjs/server/clerkMiddleware";
-import { createRouteMatcher } from "@clerk/nextjs/server/createRouteMatcher";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-const isProtectedRoute = createRouteMatcher([
-  "/dashboard(.*)",
-  "/account(.*)",
-  "/transaction(.*)"
-]);
+const protectedRoutes = [
+  /^\/dashboard/,
+  /^\/account/,
+  /^\/transaction/
+];
+
+const isProtectedRoute = (url) =>
+  protectedRoutes.some((regex) => regex.test(url.pathname));
 
 const clerk = clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
-  if (!userId && isProtectedRoute(req)) {
+  if (!userId && isProtectedRoute(req.nextUrl)) {
     const { redirectToSignIn } = await auth();
     return redirectToSignIn();
   }
