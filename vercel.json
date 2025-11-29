@@ -1,7 +1,7 @@
 {
   "functions": {
     "middleware": {
-      "excludeFiles": "node_modules/@arcjet/**"
+      "runtime": "nodejs20.x"
     }
   }
 }
