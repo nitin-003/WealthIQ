@@ -68,7 +68,16 @@ export async function createTransaction(data){
       throw new Error("Account not found");
     }
 
-    const balanceChange = data.type === "EXPENSE" ? -data.amount : data.amount;
+    // Validate transaction amount
+    const amount = parseFloat(data.amount);
+    if(isNaN(amount) || amount <= 0){
+      throw new Error("Transaction amount must be greater than 0");
+    }
+    if(amount > 1000000){
+      throw new Error("Transaction amount seems too large. Please verify.");
+    }
+
+    const balanceChange = data.type === "EXPENSE" ? -amount : amount;
     const newBalance = account.balance.toNumber() + balanceChange;
 
     const transaction = await db.$transaction(async (tx) => {
@@ -234,11 +243,20 @@ export async function updateTransaction(id, data) {
 
     if(!originalTransaction) throw new Error("Transaction not found");
 
+    // Validate transaction amount
+    const amount = parseFloat(data.amount);
+    if(isNaN(amount) || amount <= 0){
+      throw new Error("Transaction amount must be greater than 0");
+    }
+    if(amount > 1000000){
+      throw new Error("Transaction amount seems too large. Please verify.");
+    }
+
     // Calculate balance changes
     const oldBalanceChange = originalTransaction.type === "EXPENSE" ? 
     -originalTransaction.amount.toNumber() : originalTransaction.amount.toNumber();
 
-    const newBalanceChange = data.type === "EXPENSE" ? -data.amount : data.amount;
+    const newBalanceChange = data.type === "EXPENSE" ? -amount : amount;
 
     const netBalanceChange = newBalanceChange - oldBalanceChange;
 
@@ -251,6 +269,7 @@ export async function updateTransaction(id, data) {
         },
         data: {
           ...data,
+          amount: amount,
           nextRecurringDate: data.isRecurring && data.recurringInterval ?
           calculateNextRecurringDate(data.date, data.recurringInterval) : null,
         },

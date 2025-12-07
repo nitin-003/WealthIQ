@@ -74,6 +74,15 @@ export async function updateBudget(amount){
       throw new Error("Unauthorized");
     }
 
+    // Validate budget amount
+    const budgetAmount = parseFloat(amount);
+    if(isNaN(budgetAmount) || budgetAmount <= 0){
+      throw new Error("Budget amount must be greater than 0");
+    }
+    if(budgetAmount > 10000000){
+      throw new Error("Budget amount seems too large. Please verify.");
+    }
+
     const user = await db.user.findUnique({
       where: {
         clerkUserId: userId,
@@ -89,11 +98,11 @@ export async function updateBudget(amount){
         userId: user.id,
       },
       update: {
-        amount,
+        amount: budgetAmount,
       },
       create: {
         userId: user.id,
-        amount,
+        amount: budgetAmount,
       },
     });
 

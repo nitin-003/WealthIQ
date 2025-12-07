@@ -14,10 +14,11 @@ const useFetch = (cb) => {
             const response = await cb(...args);
             setData(response);
             setError(null);
-            toast.error(error.message);
+            // Removed toast.error from success path - was causing crash
         }
         catch(err){
-            setError(error);
+            setError(err);
+            toast.error(err.message || "An error occurred");
         }
         finally{
             setLoading(false);

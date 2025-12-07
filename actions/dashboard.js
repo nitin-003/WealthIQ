@@ -37,7 +37,12 @@ export async function createAccount(data){
     const balanceFloat = parseFloat(data.balance);
 
     if(isNaN(balanceFloat)){
-      throw new Error("Invalid balace amount");
+      throw new Error("Invalid balance amount");
+    }
+    
+    // Validate balance is not unreasonably large
+    if(balanceFloat > 100000000){
+      throw new Error("Account balance seems too large. Please verify.");
     }
 
     // Check if this is the user's first account
